@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form
+      id="f"
+      accept="image/*"
+      method="post"
+      target="iframe"
+      enctype="multipart/form-data"
+    >
+      <div><input type="file" name="file" /></div>
+      <div><input type="submit" value="提交" /></div>
+    </form>
+    <iframe id="iframe" name="iframe" style="display: none"></iframe>
+    <img id="img" src="" alt="" />
+    <script>
+      // function upload(e) {}
+      f.addEventListener('submit', (e) => {
+        console.log('kkk')
+        e.preventDefault()
+        var formdata = new FormData()
+        var fileInput = document.querySelector('input[name="file"]')
+        formdata.append('file', fileInput.files[0])
+        var xhr = new XMLHttpRequest()
+        xhr.open('POST', 'http://127.0.0.1:3000/upload')
+        xhr.onload = function () {
+          img.src = `http://127.0.0.1:3000/preview/${xhr.response}`
+        }
+        xhr.send(formdata)
+      })
+    </script>
+  </body>
+</html>
